@@ -1,0 +1,139 @@
+👉 Shape (Rows, Columns): (1852394, 22)
+
+👉 Data Types: trans_date_trans_time     object
+cc_num                     int64
+merchant                  object
+category                  object
+amt                      float64
+first                     object
+last                      object
+gender                    object
+street                    object
+city                      object
+state                     object
+zip                        int64
+lat                      float64
+long                     float64
+city_pop                   int64
+job                       object
+dob                       object
+trans_num                 object
+unix_time                  int64
+merch_lat                float64
+merch_long               float64
+is_fraud                   int64
+dtype: object
+
+
+🔹 DataFrame Summary 🔹
+==================================================
+📌 Shape: 1852394 rows, 22 columns
+
+📌 Data Types:
+ trans_date_trans_time    datetime64[ns]
+cc_num                            int64
+merchant                         object
+category                         object
+amt                             float64
+first                            object
+last                             object
+gender                           object
+street                           object
+city                             object
+state                            object
+zip                               int64
+lat                             float64
+long                            float64
+city_pop                          int64
+job                              object
+dob                      datetime64[ns]
+trans_num                        object
+unix_time                         int64
+merch_lat                       float64
+merch_long                      float64
+is_fraud                          int64
+dtype: object 
+
+📌 Missing Values:
+ No missing values. 
+
+📌 Duplicate rows in train_data: 0
+📌 Statistics:
+                            count  ...                    std
+trans_date_trans_time    1852394  ...                    NaN
+cc_num                 1852394.0  ...  1309115265318734848.0
+amt                    1852394.0  ...             159.253975
+zip                    1852394.0  ...           26881.845966
+lat                    1852394.0  ...                5.07147
+long                   1852394.0  ...              13.747895
+city_pop               1852394.0  ...          301487.618344
+dob                      1852394  ...                    NaN
+unix_time              1852394.0  ...         18195081.38756
+merch_lat              1852394.0  ...               5.105604
+merch_long             1852394.0  ...              13.759692
+is_fraud               1852394.0  ...               0.071992
+
+[12 rows x 8 columns] 
+
+📌 Unique Values:
+ trans_date_trans_time    1819551
+cc_num                       999
+merchant                     693
+category                      14
+amt                        60616
+first                        355
+last                         486
+gender                         2
+street                       999
+city                         906
+state                         51
+zip                          985
+lat                          983
+long                         983
+city_pop                     891
+job                          497
+dob                          984
+trans_num                1852394
+unix_time                1819583
+merch_lat                1754157
+merch_long               1809753
+is_fraud                       2
+dtype: int64 
+
+📌 Memory Usage:
+ Index                          132
+trans_date_trans_time     14819152
+cc_num                    14819152
+merchant                 133614204
+category                 110265445
+amt                       14819152
+first                    102030413
+last                     102089833
+gender                    92619700
+street                   131948413
+city                     106795369
+state                     94472094
+zip                       14819152
+lat                       14819152
+long                      14819152
+city_pop                  14819152
+job                      128245678
+dob                       14819152
+trans_num                150043914
+unix_time                 14819152
+merch_lat                 14819152
+merch_long                14819152
+is_fraud                  14819152
+dtype: int64 
+
+📌 Sample Data:
+   trans_date_trans_time            cc_num  ...  merch_long is_fraud
+0   2019-01-01 00:00:18  2703186189652095  ...  -82.048315        0
+1   2019-01-01 00:00:44      630423337322  ... -118.186462        0
+2   2019-01-01 00:00:51    38859492057661  ... -112.154481        0
+3   2019-01-01 00:01:16  3534093764340240  ... -112.561071        0
+4   2019-01-01 00:03:06   375534208663984  ...  -78.632459        0
+
+[5 rows x 22 columns] 
+
+==================================================

@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    restart: unless-stopped
+
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+      - "29092:29092" 
+    environment:
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    depends_on:
+      - zookeeper
+    restart: unless-stopped
+
+  kafka-client:
+    build:
+      context: .
+      dockerfile: ./src/kafka/Dockerfile
+    environment:
+      KAFKA_BROKER: "kafka:9092"
+    depends_on:
+      - kafka
+    restart: unless-stopped
+  spark-master:
+    image: bitnami/spark:latest
+    container_name: spark-master
+    environment:
+      - SPARK_MODE=master
+    ports:
+      - "7077:7077"  # Spark Master API
+      - "8080:8080"  # Spark Master UI
+    networks:
+      - spark-net
+
+  spark-worker-1:
+    image: bitnami/spark:latest
+    container_name: spark-worker-1
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+    depends_on:
+      - spark-master
+    networks:
+      - spark-net
+
+  spark-worker-2:
+    image: bitnami/spark:latest
+    container_name: spark-worker-2
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+    depends_on:
+      - spark-master
+    networks:
+      - spark-net
+
+  spark-notebook:
+    image: jupyter/pyspark-notebook
+    container_name: spark-notebook
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/home/jovyan/work  # Mount toàn bộ project folder
+    environment:
+      - PYSPARK_PYTHON=python3
+    depends_on:
+      - spark-master
+    networks:
+      - spark-net
+  cassandra:
+    image: cassandra:4.0
+    container_name: cassandra
+    ports:
+      - "9042:9042"
+    volumes:
+      - cassandra_data:/var/lib/cassandra
+    networks:
+      - spark-net
+ 
+volumes:
+  cassandra_data:
+
+networks:
+  spark-net:
+
